@@ -16,6 +16,7 @@ from app.schemas.auth import (
     UserLogin,
     UserRegister,
 )
+from app.services.email_service import send_welcome_email
 
 
 class AuthService:
@@ -66,10 +67,10 @@ class AuthService:
         )
 
         db.add(user)
-
         db.commit()
-
         db.refresh(user)
+
+        send_welcome_email(to_email=user.email, name=user.name)
 
         return user
 

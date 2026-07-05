@@ -89,7 +89,7 @@ def send_welcome_email(to_email: str, name: str) -> None:
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
                 <tr>
                   <td align="center">
-                    <a href="http://localhost:3000"
+                    <a href="{settings.FRONTEND_URL}"
                        style="display:inline-block;background:#2563eb;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:14px 32px;border-radius:10px;">
                       Open Studio →
                     </a>
