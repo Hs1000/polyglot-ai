@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+.env.production       # real credentials — only lives on the server, never committed
+# .env.production.example is committed (placeholder values, no real secrets)
+
+# Node / Next.js
+node_modules/
+.next/
+frontend/.env.local
+frontend/.env*.local
+
+# Uploads & model caches (large binaries)
+backend/app/uploads/
+backend/fonts/ArialUnicode.ttf
+
+# macOS
+.DS_Store
+
+# Docker
+*.log

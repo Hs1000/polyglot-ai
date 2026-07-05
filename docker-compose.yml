@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    # Not exposed to the host — nginx proxies internally via Docker networking
+    expose:
+      - "8000"
+    env_file:
+      - .env.production
+    volumes:
+      - uploads_data:/app/app/uploads
+      # HuggingFace model cache persists across container restarts.
+      # Models (~3 GB) download on first startup if the volume is empty.
+      - hf_cache:/root/.cache/huggingface
+      - easyocr_cache:/root/.EasyOCR
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - certbot_conf:/etc/letsencrypt:ro
+      - certbot_www:/var/www/certbot:ro
+    depends_on:
+      - backend
+
+volumes:
+  uploads_data:
+  hf_cache:
+  easyocr_cache:
+  certbot_conf:
+  certbot_www:
